@@ -1,0 +1,27 @@
+{
+  "name": "geoffrey-ne.github.io",
+  "version": "1.0.0",
+  "description": "blog",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoffrey-ne/geoffrey-ne.github.io.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "geoffrey-ne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geoffrey-ne/geoffrey-ne.github.io/issues"
+  },
+  "homepage": "https://github.com/geoffrey-ne/geoffrey-ne.github.io#readme",
+  "devDependencies": {
+    "vuepress": "^1.8.2"
+  }
+}
