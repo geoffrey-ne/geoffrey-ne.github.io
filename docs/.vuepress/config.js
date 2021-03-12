@@ -46,6 +46,26 @@ module.exports = {
                   title: '5. 引用类型',
                   path: '/note/javascript/professional-javascript-3/05-object',
                 },
+                {
+                  title: '6. 面向对象的程序设计',
+                  path: '/note/javascript/professional-javascript-3/06-OOP',
+                },
+                {
+                  title: '8. BOM',
+                  path: '/note/javascript/professional-javascript-3/08-BOM',
+                },
+                {
+                  title: '15. Canvas绘图',
+                  path: '/note/javascript/professional-javascript-3/15-Canvas',
+                },
+                {
+                  title: '20. JSON',
+                  path: '/note/javascript/professional-javascript-3/20-JSON',
+                },
+                {
+                  title: '21. Ajax与Comet',
+                  path: '/note/javascript/professional-javascript-3/21-Ajax-Comet',
+                },
               ],
             },
             {
@@ -90,7 +110,46 @@ module.exports = {
             },
           ],
         },
+        {
+          title: 'CS',
+          path: '/note/cs/http/qwzn-1',
+          collapsable: true,
+          sidebarDepth: 2,
+          children: [
+            {
+              title: 'HTTP',
+              path: '/note/cs/http/qwzn-1',
+              collapsable: true,
+              sidebarDepth: 1,
+              children: [
+                {
+                  title: 'http权威指南：第一部分 Web的基础',
+                  path: '/note/cs/http/qwzn-1',
+                },
+                {
+                  title: 'http权威指南：第二部分 HTTP结构',
+                  path: '/note/cs/http/qwzn-2',
+                },
+              ],
+            },
+            {
+              title: 'web 缓存',
+              path: '/note/cs/web-cache',
+            },
+            {
+              title: 'linux常用指令',
+              path: '/note/cs/linux',
+            },
+          ],
+        },
       ],
+    },
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@images': path.join(__dirname, '/images'),
+      },
     },
   },
 }
