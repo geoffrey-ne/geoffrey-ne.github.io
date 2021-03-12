@@ -10,6 +10,7 @@ module.exports = {
   // baseConfig
   title: "Geoffrey's blog",
   description: "Geoffrey's blog",
+  head: [['link', { rel: 'icon', href: 'https://github.githubassets.com/favicons/favicon.png' }]],
   base: '/',
   dest: 'public',
   markdown: {
