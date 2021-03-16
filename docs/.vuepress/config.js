@@ -17,11 +17,12 @@ module.exports = {
     lineNumbers: true,
   },
   themeConfig: {
-    repo: 'https://github.com/geoffrey-ne/geoffrey-ne.github.io/',
+    repo: 'https://github.com/geoffrey-ne/',
     repoLabel: 'GitHub',
     nav: [
-      { text: '面试', link: '/interview/' },
       { text: '学习笔记', link: '/note/' },
+      { text: '算法学习', link: '/algorithm/' },
+      { text: 'FE-Interview', link: '/fe-interview/' },
     ],
     lastUpdated: '最后更新于',
     sidebarDepth: 2,
@@ -140,6 +141,62 @@ module.exports = {
             {
               title: 'linux常用指令',
               path: '/note/cs/linux',
+            },
+          ],
+        },
+      ],
+      '/algorithm/': [
+        {
+          title: '排序算法 js 实现',
+          path: '/algorithm/sort',
+        },
+      ],
+      '/fe-interview/': [
+        {
+          title: '计算机基础',
+          path: '/fe-interview/cs/',
+          collapsable: true,
+          sidebarDepth: 2,
+          children: [
+            {
+              title: '操作系统',
+              path: '/fe-interview/cs/os',
+            },
+            {
+              title: '计算机网络',
+              path: '/fe-interview/cs/network',
+            },
+          ],
+        },
+        {
+          title: 'web浏览器',
+          path: '/fe-interview/browser',
+        },
+        {
+          title: 'js手写代码',
+          path: '/fe-interview/javascript-coding',
+        },
+        {
+          title: 'vue',
+          path: '/fe-interview/vue/',
+          collapsable: true,
+          sidebarDepth: 2,
+          children: [
+            {
+              title: 'vue',
+              path: '/fe-interview/vue/vue',
+            },
+            {
+              title: 'vue-router',
+              path: '/fe-interview/vue/vue-router',
+            },
+            {
+              title: 'vuex',
+              path: '/fe-interview/vue/vuex',
+            },
+            {
+              title: 'vue-ssr',
+              path: '/fe-interview/vue/vue-ssr',
             },
           ],
         },
