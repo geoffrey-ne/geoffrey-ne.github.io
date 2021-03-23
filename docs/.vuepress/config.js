@@ -177,6 +177,10 @@ module.exports = {
           path: '/fe-interview/javascript-coding',
         },
         {
+          title: 'snap 及 一些 js 细节',
+          path: '/fe-interview/javascript-snap',
+        },
+        {
           title: 'vue',
           path: '/fe-interview/vue/',
           collapsable: true,

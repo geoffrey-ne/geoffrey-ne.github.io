@@ -72,7 +72,7 @@ Vue.directive('lazyload', {
 
 bind: 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。 inserted: 被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。 update: 所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 componentUpdated: 指令所在组件的 VNode 及其子 VNode 全部更新后调用。 unbind: 只调用一次，指令与元素解绑时调用。
 
-# 8. nextTick 实现原理
+## 8. nextTick 实现原理
 
 当数据更新了，在 dom 中渲染后，自动执行该函数。使用 nextTick 保证当前视图渲染完成。
 
@@ -84,7 +84,7 @@ bind: 只调用一次，指令第一次绑定到元素时调用。在这里可�
   - 否则判断 setImmediate
   - 否则使用 setTimeout
 
-# 9. vue3 为什么不用 defineProperty 了
+## 9. vue3 为什么不用 defineProperty 了
 
 defineProperty 缺点：
 
@@ -101,12 +101,18 @@ proxy 可以完美解决以上问题，但是 proxy 自身也有问题：
 - 判断 key 是否为新增属性，是就 trigger；
 - 判断旧值与新值是否相等，是就 trigger;
 
-# 10. vue diff
+## 10. vue diff
 
 - 先找相同，左左，右右；
 - 没有再找只需移动的，左右右左；
 - 没有则根据新 key 在旧 key 表中查找，找到了并且相同，则移动到旧头前，否则新建；
 - 最后如果旧的遍历完了，则新的全部新建；如果新的遍历完了，则旧的全删除；
+
+## 11. try_files、proxy_pass、rewrite
+
+- try_files 为依次尝试路径，一般最后接的是肯定能满足的，比如 index.html，配合 vue 必须先访问到 html 才能生效前端路由使用；
+- proxy_pass 一般是把请求转发至代理响应，不改变浏览器 url；
+- rewrite 根据正则替换路径，会改变 url 地址；
 
 ## new Vue 做了什么
 
@@ -114,11 +120,5 @@ proxy 可以完美解决以上问题，但是 proxy 自身也有问题：
 
 - vue 的 setup 只执行一次，react hook 一般是写在函数式组件中，最终被转换为`React.createElement`，每次渲染都会执行
 - React 严格限制 Hook 的执行顺序和禁止条件调用
-
-## try_files、proxy_pass、rewrite
-
-- try_files 为依次尝试路径，一般最后接的是肯定能满足的，比如 index.html，配合 vue 必须先访问到 html 才能生效前端路由使用；
-- proxy_pass 一般是把请求转发至代理响应，不改变浏览器 url；
-- rewrite 根据正则替换路径，会改变 url 地址；
 
 ## keep-alive

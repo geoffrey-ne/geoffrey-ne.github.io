@@ -25,7 +25,7 @@ Input: {5 2 4 6 1 3}。
 - 时间复杂度 O(n^2)；
 
 ```javascript
-// 快排
+// 插入排序
 function insertionSort(arr) {
   for (let i = 1; i < arr.length; i++) {
     const value = arr[i]

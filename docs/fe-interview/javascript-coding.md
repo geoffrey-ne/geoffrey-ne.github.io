@@ -115,3 +115,74 @@ function flatten2(arr) {
   return arr.reduce((prev, next) => prev.concat(Array.isArray(next) ? flatten2(next) : next), [])
 }
 ```
+
+## 数组过滤(filter)
+
+```javascript
+Array.prototype.filter = function(fn, thisArg) {
+  const res = []
+  for (let i = 0; i < this.length; i++) {
+    if (fn.call(thisArg, this[i], i, this)) {
+      res.push(this[i])
+    }
+  }
+  return res
+}
+```
+
+## 实现 call & apply & bind
+
+```javascript
+Function.prototype.myCall = function(context) {
+  context = context || window
+  context.fn = this
+
+  let arr = []
+  for (let i = 1; i < arguments.length; i++) {
+    arr.push(`arguments[${i}]`)
+  }
+
+  const res = eval(`context.fn(${arr})`)
+  delete context.fn
+  return res
+}
+
+Function.prototype.myApply = function(context) {
+  context = context || window
+  context.fn = this
+
+  let arr = []
+  const args = arguments[1] || []
+  for (let i = 0; i < args.length; i++) {
+    arr.push(`args[${i}]`)
+  }
+
+  const res = eval(`context.fn(${arr})`)
+  delete context.fn
+  return res
+}
+
+Function.prototype.myBind = function(context) {
+  const fn = this
+  const args = [...arguments].slice(1)
+  context = context || window
+  return function() {
+    if (this instanceof fn) {
+      return new fn(...args, ...arguments)
+    }
+    return fn.apply(context, args.concat(...arguments))
+  }
+}
+```
+
+## 实现 sleep
+
+```javascript
+function sleep(time) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, time)
+  })
+}
+```
