@@ -1,6 +1,6 @@
 # 浏览器
 
-## web 缓存
+## 1. web 缓存
 
 ### 浏览器缓存
 
@@ -30,4 +30,24 @@ IndexDB 是一个运行在浏览器上的非关系型数据库。
 
 - [一张图总结 web 缓存](https://segmentfault.com/a/1190000018120629)
 
-## 跨域问题
+## 2. 跨域问题
+
+同源：协议、域名、端口三者都一致
+
+## 3. 网络攻击
+
+### 3.1 xss 攻击
+
+Cross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，危害数据安全。
+
+为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS。
+
+XSS 的本质是：恶意代码未经过滤，与网站正常的代码混在一起；浏览器无法分辨哪些脚本是可信的，导致恶意脚本被执行。
+
+### 3.2 CSRF 跨站请求伪造
+
+CSRF（Cross-site request forgery），跨站请求伪造
+
+https://www.iqiyi.com/v_19rrz4m0vc.html?flashvars=videoIsFromQidan%3Ditemviewclkrec#vfrm=5-7-0-1
+
+## 4. 浏览器事件机制

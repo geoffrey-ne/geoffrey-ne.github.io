@@ -186,3 +186,51 @@ function sleep(time) {
   })
 }
 ```
+
+## 实现 new
+
+```javascript
+function myNew() {
+  const constructor = [].shift.apply(arguments)
+  const obj = Object.creat(constructor.prototype)
+  const res = constructor.apply(obj, arguments)
+  return typeof res === 'object' ? res : obj
+}
+```
+
+## 实现 instanceof
+
+```javascript
+function instanceOf(left, right) {
+  let leftProto = left.__proto__
+  while (leftProto) {
+    if (leftProto === right.prototype) {
+      return true
+    }
+    leftProto = leftProto.__proto__
+  }
+  return false
+}
+```
+
+## 实现Object.create
+
+```javascript
+function myCreate(proto) {
+  // 这里不使用__proto__，是因为__proto__可能不存在
+  function F() {}
+  F.prototype = proto
+  return new F();
+
+}
+```
+
+
+#### Object.create原理
+```js
+function create(obj) {
+  function F() {}
+  F.prototype = obj;
+  return new F();
+}
+```

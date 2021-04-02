@@ -147,6 +147,18 @@ module.exports = {
       ],
       '/algorithm/': [
         {
+          title: '常见算法解题思路',
+          path: '/algorithm/methods/',
+          collapsable: true,
+          sidebarDepth: 2,
+          children: [
+            {
+              title: '单调栈',
+              path: '/algorithm/methods/monotone-stack',
+            },
+          ],
+        },
+        {
           title: '排序算法 js 实现',
           path: '/algorithm/sort',
         },
@@ -179,6 +191,10 @@ module.exports = {
         {
           title: 'snap 及 一些 js 细节',
           path: '/fe-interview/javascript-snap',
+        },
+        {
+          title: 'webpack',
+          path: '/fe-interview/webpack',
         },
         {
           title: 'vue',
