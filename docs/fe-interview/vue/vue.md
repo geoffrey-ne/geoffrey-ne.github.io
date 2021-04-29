@@ -114,6 +114,15 @@ proxy 可以完美解决以上问题，但是 proxy 自身也有问题：
 - proxy_pass 一般是把请求转发至代理响应，不改变浏览器 url；
 - rewrite 根据正则替换路径，会改变 url 地址；
 
+## 12. 使用数组索引作为 key 为什么是一种反优化
+
+判断两个 vnode 是否相同，第一个就是判断两个 vnode 的 key 值是否相同
+
+- 使用数组索引作为 key，当数组改变时，key 的值无法表现出实际改变，与未标记 key 值的效果一致；
+- key 值还会用于保存 dom 的状态，如果 key 值无法体现实际改变，可能会引起状态串行问题；
+
+参考：https://segmentfault.com/a/1190000019961419
+
 ## new Vue 做了什么
 
 ## compose api 和 react hook 区别
