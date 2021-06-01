@@ -34,6 +34,8 @@ IndexDB 是一个运行在浏览器上的非关系型数据库。
 
 同源：协议、域名、端口三者都一致
 
+### 为什么要限制同源
+
 ## 3. 网络攻击
 
 ### 3.1 xss 攻击
@@ -44,10 +46,16 @@ Cross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入�
 
 XSS 的本质是：恶意代码未经过滤，与网站正常的代码混在一起；浏览器无法分辨哪些脚本是可信的，导致恶意脚本被执行。
 
+https://www.iqiyi.com/v_19rrz4m0vc.html?flashvars=videoIsFromQidan%3Ditemviewclkrec#vfrm=5-7-0-1
+
 ### 3.2 CSRF 跨站请求伪造
 
 CSRF（Cross-site request forgery），跨站请求伪造
 
-https://www.iqiyi.com/v_19rrz4m0vc.html?flashvars=videoIsFromQidan%3Ditemviewclkrec#vfrm=5-7-0-1
+假如一家银行用以运行转账操作的 URL 地址如下： https://bank.example.com/withdraw?account=AccoutName&amount=1000&for=PayeeName
+
+那么，一个恶意攻击者可以在另一个网站上放置如下代码： <img src="https://bank.example.com/withdraw?account=Alice&amount=1000&for=Badman" />
+
+如果有账户名为 Alice 的用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失 1000 资金。
 
 ## 4. 浏览器事件机制
