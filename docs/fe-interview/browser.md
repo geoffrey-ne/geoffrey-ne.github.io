@@ -7,7 +7,7 @@
 - 内存缓存：最优先
 - service-worker 缓存
 - http 缓存
-  - 强缓存：cache-control: no store（彻底重来）；no cache（交由服务器判断是否可以使用缓存，可以返回 304）；max-age（缓存时间）；public 及 private 用于控制代理服务器是否可以缓存
+  - 强缓存：cache-control: no store（彻底重来）；no cache；max-age（缓存时间）；public 及 private 用于控制代理服务器是否可以缓存
   - 协商缓存：If-None-Match 中的 ETag 判断是否相同； If-Modified-Since 判断是否过期
 
 ### Web Storage

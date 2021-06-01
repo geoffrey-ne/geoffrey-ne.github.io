@@ -165,6 +165,23 @@ patch 会递归创建子节点，子节点创建成功后(vnode 不为空)，会
 
 所以当数据改变时，会重新触发`updateComponent`，调用`render`更新 vnode，调用`__patch__`做 diff 后更新视图。
 
+### watcher
+
+属性说明：
+
+- lazy：lazy 就是给 computed 用的
+
+  - 当数据更新时，配置为 lazy 的 watcher 会将 dirty 属性设置为 true；
+  - 当执行 computed 的 getter 时，会判断这个 wathcer 的 dirty 属性是否为 true，如果不是，相当于命中缓存，不再重新执行，否则执行 watcher.evaluate 更新数据
+
+#### 关于 watcher 的执行
+
+- lazy: lazy 的 watcher 是给 computed 用的，当数据更新时被标记 dirty 为 true，当执行 computed 的 getter 时执行 watcher；
+  - 使用位置：computed
+- sync: 数据更新时直接同步执行 watcher.run 获取值；
+- 剩余所有的 watcher 执行都会统一使用`scheduler`管理。`scheduler`会根据 watcher 的 id，依次插入队列中，在 waiting 为 false 时依次执行。全部执行结束之后调用`nextTick`。
+  - 使用位置：updateComponent
+
 ## （内部）patch 说明
 
 ```
@@ -175,8 +192,20 @@ vm._init()
 ```
 
 - `_render`通过调用`createElement`创建了 vnode 树
+  - 从目前代码了解到，当数据更新时，会完全重新创建一个新的 vnode 树
+  - 但是如果是子组件自己的 render 更新，那么相当于至在子组件数据范围内做 vnode 比较及更新，即每个 vm 实例就是 vnode 更新的最大范围
 - `_update`方法拿到 vnode 树，调用 patch 开始更新 DOM
 
 ## 其他细节
 
 ### nextTick
+
+## 总结
+
+- 数据本身通过`observe`方法重写`get`、`set`方法变为可以搜集依赖，可以在更改时通知依赖
+- 在用到数据的地方，会新建一个`watcher`，
+  - 这个 watcher 初始时因为需要获取数据值而触发了数据的`get`这时
+  - 当前的 watcher 被添加到了数据的`Dep`列表中
+  - 当数据更新时，通知 watcher 更新对应的操作
+  - watcher 更新之后会调用 nextTick
+  - 视图渲染及更新就是一个 watcher，调用`updateComponent`
