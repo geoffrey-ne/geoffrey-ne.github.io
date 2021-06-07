@@ -52,6 +52,28 @@ function deepCopy(obj) {
   }
   return newObj
 }
+
+// 深拷贝复杂版
+function deepCopy(obj, cache = new WeakMap()) {
+  if (obj instanceof RegExp) return new RegExp(obj)
+  if (obj instanceof Date) return new Date(obj)
+
+  if (obj === null || typeof obj !=== 'object') return obj
+
+  if (cache.has(obj)) {
+    return cache.get(obj)
+  }
+
+  const res = new obj.constructor();
+  cache.set(obj, res)
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      res[key] = deepCopy(obj[key], cache)
+    }
+  }
+  return res
+}
+
 ```
 
 ## 数组乱序
@@ -213,24 +235,103 @@ function instanceOf(left, right) {
 }
 ```
 
-## 实现Object.create
+## 实现 Object.create
 
 ```javascript
 function myCreate(proto) {
   // 这里不使用__proto__，是因为__proto__可能不存在
   function F() {}
   F.prototype = proto
-  return new F();
-
+  return new F()
 }
 ```
 
+#### Object.create 原理
 
-#### Object.create原理
 ```js
 function create(obj) {
   function F() {}
-  F.prototype = obj;
-  return new F();
+  F.prototype = obj
+  return new F()
+}
+```
+
+#### fetch
+
+```js
+/**
+ * 创建一个handlerFetch
+ *
+ * @param {limit，timeout} limit 为并发控制 timeout为超时设定
+ * @return function 返回一个函数
+ */
+function handlerFetch(limit, timeout) {
+  limit = limit || 1
+  timeout = timeout || 0
+  var count = 0,
+    pool = []
+  return function(url, options) {
+    // 通过AbortController 控制 取消fetch 请求
+    var controller = new AbortController()
+    var signal = controller.signal
+    // 判断是否需要超时
+    var isTimeout = (options && options.timeout) || timeout
+    // 控制请求超时
+    var timeoutPromise = () => {
+      return new Promise((resolve, reject) => {
+        setTimeout(
+          () => {
+            resolve('请求超时')
+            controller.abort()
+          },
+          options && options.timeout !== undefined ? options.timeout : timeout,
+        )
+      })
+    }
+    // 返回fetch 本身
+    var taskPromise = () =>
+      new Promise((resolve, reject) => {
+        fetch(url, { signal, ...options })
+          .then(res => {
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    // 通过Promise.race可以控制超时，并在访问结果中 去继续调用等待池中的请求
+    var task = () =>
+      (isTimeout ? Promise.race([timeoutPromise(), taskPromise()]) : taskPromise())
+        .then(res => {
+          console.log('res', res)
+          next()
+        })
+        .catch(err => {
+          next()
+          console.log('err', err)
+        })
+
+    // 定一个next 控制等待队列中的请求继续并发调用
+    var next = () => {
+      // 每执行一次next count - 1，然后比较当前的count 与 limit
+      // 如果小于limit 循环执行limit-count 次
+      count--
+      if (count < limit && pool.length) {
+        var n = limit - count
+        for (var i = 0; i < n; i++) {
+          var curTask = pool.shift()
+          curTask()
+          ++count
+        }
+      }
+    }
+    // 比较count与limit 大于等于limit的推入等待队列 小于limit的 count + 1，并执行fetch请求
+    if (count >= limit) {
+      pool.push(task)
+    } else {
+      ++count
+      task()
+    }
+  }
 }
 ```

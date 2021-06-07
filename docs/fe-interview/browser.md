@@ -34,6 +34,10 @@ IndexDB 是一个运行在浏览器上的非关系型数据库。
 
 同源：协议、域名、端口三者都一致
 
+简单请求：GET/POST/HEAD请求
+
+Access-Control-Allow-Origin
+
 ### 为什么要限制同源
 
 ## 3. 网络攻击
