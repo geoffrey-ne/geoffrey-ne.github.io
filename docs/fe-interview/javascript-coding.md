@@ -195,6 +195,12 @@ Function.prototype.myBind = function(context) {
     return fn.apply(context, args.concat(...arguments))
   }
 }
+
+Function.prototype.mybind = function(context, ...args) {
+  return (...newArgs) => {
+    return this.call(context, ...args, ...newArgs)
+  }
+}
 ```
 
 ## 实现 sleep
@@ -334,4 +340,63 @@ function handlerFetch(limit, timeout) {
     }
   }
 }
+```
+
+## 实现 reduce
+
+```javascript
+Array.prototype.myReduce = (fn, initVal) => {
+  let index = 0
+  let res = initVal
+  const arr = this
+
+  if (typeof initVal === 'undefined') {
+    res = arr[index]
+    index++
+  }
+
+  while (index < arr.length) {
+    res = fn(res, arr[index])
+    index++
+  }
+  return res
+}
+```
+
+## 实现可拖拽的 DIV
+
+```html
+<div
+  id="drag"
+  style="position: absolute; width: 200px; height: 200px; background-color: grey;"
+></div>
+```
+
+```javascript
+const dom = document.getElementById('drag')
+let isDrag = false
+let position = []
+
+dom.addEventListener('mouseDown', event => {
+  isDrag = true
+  position = [event.clientX, event.clientY]
+})
+
+document.addEventListener('mousemove', event => {
+  if (!isDrag) {
+    return
+  }
+  const left = parseInt(dom.style.left || 0)
+  const top = parseInt(dom.style.top || 0)
+  const moveX = position[0] - event.clientX
+  const moveY = position[1] - event.clientY
+
+  dom.style.left = left + moveX
+  dom.style.top = top + moveY
+  position = [event.clientX, event.clientY]
+})
+
+document.addEventListener('mouseup', function(e) {
+  isDrag = false
+})
 ```

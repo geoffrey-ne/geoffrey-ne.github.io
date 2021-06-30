@@ -47,4 +47,29 @@ bar()
 // 结果是 1
 ```
 
-## js执行上下文
+## js 执行上下文
+
+## 看代码说输出
+
+```javascript
+function a() {
+  var n = 9
+
+  function add () {
+    console.log(n++)
+  }
+
+  return {
+    n: n
+    add: add
+  }
+}
+
+var t1 = a()
+console.log(t1.n)
+console.log(t1.add())
+
+var t2 = a()
+console.log(t2.n)
+console.log(t2.add())
+```
