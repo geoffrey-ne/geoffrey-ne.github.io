@@ -191,3 +191,8 @@ react 中绑定事件处理与 dom 元素处理非常类似，区别在于：
 为什么不能用数组 index 作为 key 给了一篇文章：[in-depth explanation on the negative impacts of using an index as a key](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318)
 
 ## Forms 表单
+
+## 参考资料
+
+- [一步步构建自己的 react](https://pomb.us/build-your-own-react/)
+- [React 技术揭秘](https://react.iamkasong.com/)
