@@ -256,6 +256,26 @@ function MyComponent() {
 export { MyComponent as default } from './ManyComponents.js'
 ```
 
+## 上下文 context
+
+上下文允许子孙组件直接获取祖先的数据，无需逐层传递。
+
+如果仅仅是为了避免多层数据传递，组件组合往往是一个更好的解决方案。将需要数据的组件提到数据所在的父组件，然后将组件本身传下去。（但是我感觉这样看着也很难受）
+
+### API
+
+createContext
+
+`const MyContext = React.createContext(defaultValue);`，创建一个 context 对象。注意：默认值仅在组件未找到匹配的`Provider`时才会生效。
+
+`Class.contextType`给类组件使用上下文用的。
+
+`Context.Consumer`给函数组件使用上下文用的。
+
+`Context.displayName`仅仅是给 devtool 查看使用的。
+
+这篇里有个`Caveats`注意，主要是说在给 provider 的 value 赋值时，不用直接使用对象字面量，`<MyContext.Provider value={{something: 'something'}}>`。因为每次 provider 重新渲染时，都会触发所有消费者更新。应该使用 state 来替换字面量。
+
 ## 参考资料
 
 - [一步步构建自己的 react](https://pomb.us/build-your-own-react/)
