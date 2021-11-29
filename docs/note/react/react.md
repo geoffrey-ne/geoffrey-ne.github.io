@@ -192,6 +192,70 @@ react 中绑定事件处理与 dom 元素处理非常类似，区别在于：
 
 ## Forms 表单
 
+原来 Forms 中讲了受控组件。一般对于原生 html 标签，比如`<input> <textarea> <select>`，他们都自己维护自己的状态（数据），并且通过用户的操作更新值。而在 react 中，状态通常由 react 组件维护，并且只能通过`setState()`方法更新。
+
+我们可以将两者结合起来，来统一数据至一个单一的源。像这种 form 中的 input 组件值由 react 控制的组件，叫做受控组件。受控的方式通常是使用 state 赋值给组件 value，然后通过监听其 change 方法（这个 onChange 真的好像指令，猜测 vue 的指令就这么来的）。
+
+## 状态提升
+
+就是把 state 提升到公共祖先那，实现数据状态共享。
+
+## 组合 vs 继承
+
+react 组件更加适合使用组合方式，而不是继承。组合可以使用`children`或者`props`拼出一个新组件。
+
+## react 的一些思考
+
+从 UI 到 react 工程的一些思路。
+
+# advance guides
+
+## Accessibility
+
+todo
+
+## Code-splitting
+
+### Bundling
+
+打包工具，react 程序一般都会使用 webpack/rollup/browserify 等等打包工具打包。如果使用 create react app,nextjs,gatsby，这些创建项目，那么打包工具已经帮你集成好了。否则你需要自己配置打包工具。
+
+### code splitting 代码分割
+
+打包很好，但是把所有文件都打到一起可能产生一个非常大的包，尤其是使用第三方工具的时候，你需要关注打包结果文件，以免它过大导致程序加载缓慢。
+
+打包工具一般都支持代码分割，这支持程序在运行时动态加载需要的资源，或者减少首次渲染需要的代码。
+
+**import**
+
+最好的标记代码分割方式是使用`import`语法，打包工具如`webpack`会根据`import`自动完成代码分割。当使用`babel`时，需要使用`@babel/plugin-syntax-dynamic-import`插件，保证能够识别`import`却不转变他们。
+
+**React.lazy 及 Suspense**
+
+```jsx
+const OtherComponent = React.lazy(() => import('./OtherComponent'))
+
+function MyComponent() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <OtherComponent />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+使用`React.lazy`可以实现组件的动态加载。懒加载组件应该再`Suspense`内部使用，这允许我们对错误进行处理。
+
+路由方式的代码分割本质也是使用`React.lazy`。
+
+`React.lazy`要求 import 的组件使用默认导出`default exports`，如果你使用了具名导出，可以使用`as default`方式兼容。
+
+```jsx
+export { MyComponent as default } from './ManyComponents.js'
+```
+
 ## 参考资料
 
 - [一步步构建自己的 react](https://pomb.us/build-your-own-react/)
