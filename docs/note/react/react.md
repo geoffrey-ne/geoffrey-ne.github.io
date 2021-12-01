@@ -276,6 +276,42 @@ createContext
 
 这篇里有个`Caveats`注意，主要是说在给 provider 的 value 赋值时，不用直接使用对象字面量，`<MyContext.Provider value={{something: 'something'}}>`。因为每次 provider 重新渲染时，都会触发所有消费者更新。应该使用 state 来替换字面量。
 
+## Error Boundaries
+
+错误边界，其作用类似 try cache，只不过其形式为组件。一个`ErrorBoundary`组件下的所有子节点中出现任何问题，都可以被其捕获并进行处理，你可以用它提供 fallback，以优化展示，而不是全局页面崩溃。
+
+`ErrorBoundary`组件只能是类组件，其中`static getDerivedStateFromError(error)`方法可以提供 fallback 处理，`componentDidCatch`可以用于记录日志。
+
+## Forwarding Refs
+
+转交 refs？看了前半部分，理解上是可以在父组件上创建 ref，然后在子组件上绑定 ref，达到外层可以访问内部 ref 的能力。目前暂时没遇到场景，没细看。
+
+```tsx
+const FancyButton = React.forwardRef((props, ref) => (
+  <button ref={ref} className="FancyButton">
+    {props.children}
+  </button>
+))
+
+// You can now get a ref directly to the DOM button:
+const ref = React.createRef()
+
+<FancyButton ref={ref}>Click me!</FancyButton>
+```
+
+## Fragments
+
+一个空的标签，允许包裹多个 child 元素。这里面有个问题，就是为什么 react 的组件和元素都只能有一个根节点？是不是因为 jsx 限制的，在编译的时候变成了 React.createElement 方法。**存疑**
+
+```tsx
+// <React.Fragment>
+<>
+  <Child1 />
+  <Child2 />
+  <Child3 />
+</>
+```
+
 ## 参考资料
 
 - [一步步构建自己的 react](https://pomb.us/build-your-own-react/)
