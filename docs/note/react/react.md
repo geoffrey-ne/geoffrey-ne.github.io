@@ -312,6 +312,11 @@ const ref = React.createRef()
 </>
 ```
 
+## 高阶组件
+
+高阶组件应该是传入一个组件作为参数，生成一个新的组件。不过这有什么可讲的，还要单独列一章呢？
+说了下高阶组件的作用，没太细看
+
 ## 参考资料
 
 - [一步步构建自己的 react](https://pomb.us/build-your-own-react/)
