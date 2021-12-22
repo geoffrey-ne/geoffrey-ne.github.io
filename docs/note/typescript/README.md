@@ -1,5 +1,8 @@
 # typescript 学习
 
+- 官网：https://www.typescriptlang.org/
+- 练习网站：https://typescript-exercises.github.io/
+
 核心作用：
 
 - 静态类型系统：js 本身具有的类型，比如：`string`、`string[]`等；使用`interface`自定义的复杂类型
