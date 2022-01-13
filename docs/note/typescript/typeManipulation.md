@@ -64,3 +64,47 @@ type P = ReturnType<typeof f>
 使用`typeof`可以很方便的将值(values)转换为类型(types)。
 
 限制：`typeof`只允许直接接变量或变量的属性。详见文档。
+
+## Indexed Access Types
+
+> docs: https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html
+
+索引访问类型，可以用它来查看指定类型某一属性的类型。
+
+```typescript
+type Person = { age: number; name: string; alive: boolean }
+type Age = Person['age'] // type Age = number
+```
+
+索引访问类型也是类型的一种，所以完全可以使用联合类型，`keyof`，或者其它类型代替。
+
+但是：
+
+- 不能使用值(values)；
+- 访问不存在的索引类型会报错；
+
+```typescript
+type I1 = Person['age' | 'name'] // string | number
+type I2 = Person[keyof Person] // string | number | boolean
+type AliveOrName = 'alive' | 'name'
+type I3 = Person[AliveOrName] // string | boolean
+
+const key = 'age'
+type Age = Person[key]
+
+// error: Type 'key' cannot be used as an index type.
+// 'key' refers to a value, but is being used as a type here. Did you mean 'typeof key'?
+
+type I1 = Person['alve']
+// error: Property 'alve' does not exist on type 'Person'.
+```
+
+可以使用`number`的索引类型，来获取数组元素的类型。
+
+```typescript
+const MyArray = [
+  { name: 'Alice', age: 15 },
+  { name: 'Bob', age: 23 },
+]
+type Person = typeof MyArray[number] // type Person = { name: string; age: number; }
+```
