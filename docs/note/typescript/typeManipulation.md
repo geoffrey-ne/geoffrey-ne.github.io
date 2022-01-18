@@ -108,3 +108,115 @@ const MyArray = [
 ]
 type Person = typeof MyArray[number] // type Person = { name: string; age: number; }
 ```
+
+## Conditional Types
+
+> docs: https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html
+
+条件类型。在大多数程序的核心部分，我们常需要根据输入去做选择，js 程序也不例外。但是事实上那些值很容易根据输入类型而推断出。条件类型可以用来描述输入与输出的关系。
+
+```typescript
+interface Animal {
+  live(): void
+}
+interface Dog extends Animal {
+  woof(): void
+}
+
+type Example1 = Dog extends Animal ? number : string // type Example1 = number
+type Example2 = RegExp extends Animal ? number : string // type Example2 = string
+```
+
+条件类型的形式与 js 中的条件表达式有点相似：
+
+```typescript
+SomeType extends OtherType ? TrueType: FalseType;
+```
+
+如果`extends`左边的类型可以赋给右边就会走到`TrueType`分支，否则走到`FalseType`分支。
+
+上面示例中的条件类型可能无法直接展现其作用。我们自己能够知道`Dog extends Animal`是否正确，然后直接选择`number`或者`string`!但是条件类型在泛型中会发挥强有力的作用。
+
+例如，示例中的`createLabel`方法：
+
+```typescript
+interface IdLabel {
+  id: number /* some feilds */
+}
+interface NameLable {
+  name: string /* other fields */
+}
+
+function createLabel(id: number): IdLabel
+function createLabel(name: string): NameLabel
+function createLable(nameOrId: string | number): IdLabel | NameLabel
+function createLable(nameOrId: string | number): IdLabel | NameLabel {
+  throw 'unimplemented'
+}
+
+type NameOrIdLable<T extends string | number> = T extends string ? NameLabel : IdLabel
+function createLabel<T extends string | number>(nameOrId: T): NameOrIdLabel<T> {
+  throw 'unimplemented'
+}
+
+let a = createLabel('typescript') // a: NameLabel
+let b = createLabel(2.8) // b: IdLabel
+let c = createLabel(Math.random() ? 'hello' : 42) // c: NameLabel : IdLabel
+```
+
+使用条件类型来约束类型
+
+```typescript
+// 限制了泛型T必须具有message属性
+type MessageOf<T extends { message: unknown }> = T['message']
+
+interface Email {
+  message: string
+}
+
+type EmailMessageContents = MessageOf<Email> // type EmailMessageContents = string
+
+// T可以是任意类型，当没有message属性时，返回never
+type MessageOf<T> = T extends { message: unknown } ? T['message'] : never
+
+type DogMessageContents = MessageOf<Dog> // type DogMessageContents = never
+
+// another example
+type Flatten<T> = T extends any[] ? T[number] : T
+```
+
+### 条件类型中的**infer**
+
+我理解`infer`代表推断出了一个泛型，这个类型根据后续使用确定，然后我们拿到这个类型，配合条件类型，在某种条件下，返回`infer`推断出的类型。
+
+```typescript
+// infer Item是个泛型，由将来的数组类型确定
+// 如果Type是数组，就返回数组类型，否则返回Type类型
+type Flatten<Type> = Type extends Array<infer Item> ? Item : Type
+
+// infer Return是个泛型，由输入的函数的返回值确定
+type GetReturnType<Type> = Type extends (...args: never[]) => infer Return ? Return : never
+```
+
+## 分发条件类型
+
+当泛型是个联合类型的时候，条件类型会被分发(Distributive)。比如：
+
+```typescript
+type ToArray<Type> = Type extends any ? Type[] : never
+type StrArrOrNumArr = ToArray<string | number> // type StrArrOrNumArr = string[] | number[]
+
+// 发生了什么？
+// 当泛型接收了联合类型string | number
+// 联合类型会被分别判断
+type StrArrOrNumArr =
+  | (string extends any ? string[] : never)
+  | (number extends any ? number[] : never)
+
+// 然后去掉条件
+type StrArrOrNumArr = string[] | number[]
+
+// 那如果需要(string | number)[]类型怎么办，可以这么搞
+// 将extends前后的关键字都用方括号包裹住
+type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never // type StrArrOrNumArr = (string | number)[]
+```
