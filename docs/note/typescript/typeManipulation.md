@@ -220,3 +220,81 @@ type StrArrOrNumArr = string[] | number[]
 // 将extends前后的关键字都用方括号包裹住
 type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never // type StrArrOrNumArr = (string | number)[]
 ```
+
+## Mapped Types
+
+> docs: https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
+
+映射类型。
+
+todo: 后续的还需要认真看，主要看起来是由原对象的 key 生成新的一组 key。
+
+## Template Literal Types
+
+> docs: https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
+
+模板文本类型。这个有点类似字符串模板的 type 版。
+
+```typescript
+type World = "world";
+type Greeting = `hello ${World}`; // type Greeting = "hello world"
+
+// Union 类型会被依次处理。
+type EmailLocaleIDs = "welcome_email" | "email_heading";
+type FooterLocaleIDs = "footer_title" | "footer_sendoff";
+type AllLocaleIDs = `${EmailLocaleIDs | FooterLocaleIDs}_id`; // type AllLocaleIDs = "welcome_email_id" | "email_heading_id" | "footer_title_id" | "footer_sendoff_id"
+```
+
+这个看着还挺有意思。
+
+```typescript
+type PropEventSource<Type> = {
+    // 这里可以限制on里接收的字符串只能是`${key}Changed`
+    // 这里string & keyof Type限制了只有string类型的key
+    on<Key extends string & keyof Type>(eventName: `${Key}Changed`, callback: (newValue: Type[Key]) => void): void;
+};
+
+/// Create a "watched object" with an 'on' method
+/// so that you can watch for changes to properties.
+declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type>;
+
+const person = makeWatchedObject({
+    firstName: 'Saoirse',
+    lastName: 'Ronan',
+    age: 26,
+});
+
+// str和num都可以自动推断出来
+person.on('firstNameChanged', (str) => {})
+person.on('firstNameChanged', (num) => {})
+```
+
+**内置的`string`类型的操作类型**
+
+`Uppercase<StringType>` 字母转大写
+
+```typescript
+type Greeting = 'Hello, world'
+type ShoutyGreeting = Uppercase<Greeting> // type ShoutyGreeting = "HELLO, WORLD"
+```
+
+`Lowercase<StringType>` 字母转小写
+
+```typescript
+type Greeting = 'HELLO, WORLD'
+type ShoutyGreeting = Lowercase<Greeting> // type ShoutyGreeting = "Hello, world"
+```
+
+`Capitalize<StringType>` 首字母转大写
+
+```typescript
+type Greeting = 'hello, world'
+type ShoutyGreeting = Capitalize<Greeting> // type ShoutyGreeting = "Hello, world"
+```
+
+`Uncapitalize<StringType>` 首字母转小写
+
+```typescript
+type Greeting = 'HELLO, WORLD'
+type ShoutyGreeting = Uncapitalize<Greeting> // type ShoutyGreeting = "hELLO, WORLD"
+```
