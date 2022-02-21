@@ -1,5 +1,7 @@
 # Type Manipulation 类型操作
 
+Typescript 的类型系统十分强大，因为它允许基于一个类型来描述另一个类型。
+
 ## Keyof Type Operator
 
 > docs: https://www.typescriptlang.org/docs/handbook/2/keyof-types.html
