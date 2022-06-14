@@ -42,6 +42,7 @@ const manifestJSON = {
 ```
 
 background script
+  - 主要用作事件监听及处理
 
 user interface 用户界面
 
