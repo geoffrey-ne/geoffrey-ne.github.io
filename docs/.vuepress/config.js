@@ -22,6 +22,7 @@ module.exports = {
     nav: [
       { text: '学习笔记', link: '/note/' },
       { text: '算法学习', link: '/algorithm/' },
+      { text: 'English', link: '/english/' },
       { text: 'FE-Interview', link: '/fe-interview/' },
     ],
     lastUpdated: '最后更新于',
