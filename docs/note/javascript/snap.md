@@ -11,6 +11,13 @@ const person = {
 }
 ```
 
+## 兼容未定义的数组或对象
+
+```javascript
+;(obj[key] || obj[key] = []).push(something)
+;(obj[key] || obj[key] = {})[prop] = 'something'
+```
+
 ## `[Symbol.iterator]`自定义迭代器
 
 ```javascript
