@@ -97,7 +97,3 @@ I largely only eat carrots. 我基本上只吃胡萝卜
     - This was the place where the rabbit ate the carrot.
     - This is the reason why the rabbit ate the carrot.
 - 句子副词：Obviously
-
-### 学过（副词）adv.
-
-- yes [jes] 是的
