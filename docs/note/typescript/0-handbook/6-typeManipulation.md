@@ -67,6 +67,14 @@ type P = ReturnType<typeof f>
 
 限制：`typeof`只允许直接接变量或变量的属性。详见文档。
 
+使用`typeof`获取数组中内容所有类型可以这么写：
+
+```typescript
+const arr = [1, 2, '1'] as const
+type ItemValue = typeof arr[number] // 这里直接写number即可
+// type ItemValue = 1 | 2 | '1'
+```
+
 ## Indexed Access Types
 
 > docs: https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html
