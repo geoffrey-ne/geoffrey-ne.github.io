@@ -1,5 +1,7 @@
 # HTML: HyperText Markup Language
 
+> https://developer.mozilla.org/en-US/docs/Web/HTML
+
 HTML（超文本标记语言），是构成 web 世界的基础模块，它定义了 web 内容的意义和结构。
 
 CSS 描述了 web 页面如何展示；JavaScript 描述了页面的行为。
