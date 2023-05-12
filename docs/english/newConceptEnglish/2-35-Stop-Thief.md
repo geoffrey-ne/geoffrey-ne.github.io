@@ -14,7 +14,9 @@ The one with the money got such (a) fright as he droft back(that he dropped the 
 
 Roy drove his the bus into the back of it. While the back of the(battered) car was moving away, Roy stopped his bus and telephoned the police.
 
-The thieives' car was baddly damaged and easy to recognies(recognize). Shortly after this(afterwards), the police stopped the car and both of(-) them(men) were arrested.
+The thieives' car was baddly damaged and easy to recognies(recognize). 
+
+Shortly after this(afterwards), the police stopped the car and both of(-) them(men) were arrested.
 
 ## 翻译
 
