@@ -20,3 +20,46 @@ exports.groupBy = (arr = [], fn) => {
   )
 }
 ```
+
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function handleAlertClick() {
+    setTimeout(() => {
+      alert('You clicked on: ' + count);
+    }, 3000);
+  }
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+      <button onClick={handleAlertClick}>
+        Show alert
+      </button>
+    </div>
+  );
+}
+// 先点三次click me，再点一次show alert，再点两次click me，alert了什么
+
+function a() {
+  var n = 9
+
+  function add () {
+    console.log(n++)
+  }
+
+  return {
+    n: n,
+    add: add
+  }
+}
+
+var t1 = a()
+console.log(t1.add())
+
+var t2 = a()
+console.log(t2.add())
